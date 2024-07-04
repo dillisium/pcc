@@ -1,5 +1,5 @@
 # NOTE commands were edited and not all commands from sources were used, so links are here only for reference and information
-## Links for sources
+## Links for sources 
 owncloud installation
 https://docs.vultr.com/how-to-install-and-configure-owncloud-on-ubuntu-20-04
 LAMP
@@ -15,11 +15,14 @@ pcc/24
 hostname [name]
 nano /etc/hosts 
 ```
+## file changing
 	127.0.1.1 [hostname]
 	ctrl + x, y, enter
 ```
 nano /etc/netplan/00-installer-config.yaml
 ```
+## file changing
+
 	ens18:
 		addresses:
 		[ip address]
