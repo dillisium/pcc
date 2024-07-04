@@ -67,7 +67,7 @@ y
 ```
 ## space, enter, No, enter
 ```
-nano /var/html/info.php
+nano /var/www/html/info.php
 ```
 ## put that into file
 ```
