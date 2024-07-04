@@ -64,6 +64,8 @@ apt install libapache2-mod-php php-mysql
 y
 apt install phpmyadmin
 y
+apt install php-intl
+y
 ```
 ## space, enter, No, enter
 ```
@@ -94,8 +96,7 @@ FTP_PROXY=http://proxy.hof-university.de:3128/
 ```
 ## `shutdown now` and run instance again to apply proxy settings
 ```
-apt install php-intl
-y
+
 mysql -u root -p
 password
 CREATE DATABASE owncloud;
