@@ -104,6 +104,7 @@ GRANT ALL PRIVILEGES ON owncloud.* TO 'cloud_user'@'localhost';
 FLUSH PRIVILEGES;
 exit
 wget https://download.owncloud.com/server/stable/owncloud-complete-20210721.zip
+mv owncloud-complete-20210721.zip /var/www/html
 apt install unzip
 unzip owncloud-complete-20210721.zip
 chown -R www-data:www-data owncloud/
