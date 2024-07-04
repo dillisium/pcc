@@ -52,7 +52,6 @@ mysql
 ## ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-FLUSH PRIVILEGES
 ```
 ## Now we can login with `mysql -p` and entering password
 ```
