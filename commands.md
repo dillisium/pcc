@@ -62,7 +62,7 @@ apt install php
 y
 apt install libapache2-mod-php php-mysql 
 y
-install phpmyadmin
+apt install phpmyadmin
 y
 ```
 ## space, enter, No, enter
@@ -122,3 +122,4 @@ nano /var/www/html/owncloud/config/config.php
   ```
   service apache2 restart
   ```
+  
