@@ -92,7 +92,7 @@ HTTP_PROXY=http://proxy.hof-university.de:3128/
 HTTPS_PROXY=http://proxy.hof-university.de:3128/
 FTP_PROXY=http://proxy.hof-university.de:3128/
 ```
-## Shutdown now and run instance again to apply proxy settings
+## `shutdown now` and run instance again to apply proxy settings
 ```
 apt install php-intl
 y
@@ -124,3 +124,16 @@ nano /var/www/html/owncloud/config/config.php
   service apache2 restart
   ```
   
+
+
+
+
+
+
+
+  # MariaDB cluster
+
+  ```
+  apt-get install chrony -y
+
+  ```
