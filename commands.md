@@ -107,6 +107,11 @@ wget https://download.owncloud.com/server/stable/owncloud-complete-20210721.zip
 apt install unzip
 unzip owncloud-complete-20210721.zip
 chown -R www-data:www-data owncloud/
+nano /etc/apache2/sites-available/000-default.conf
+```
+## change DocumentRoot to `/var/www/html/owncloud  ` 
+```
+
 service apache2 restart
 ```
 ## Follow your ip in vrowser and Create admin account
@@ -115,7 +120,7 @@ pass `PCC/24pcc/24`
 database user `cloud_user`
 database table name `owncloud`
 database user pass `PCC/24pcc/24`
-## config for new ip
+## config for new ip (if needed)
 ```
 nano /var/www/html/owncloud/config/config.php
 ```
