@@ -109,7 +109,7 @@ unzip owncloud-complete-20210721.zip
 chown -R www-data:www-data owncloud/
 service apache2 restart
 ```
-## Create admin account
+## Follow your ip in vrowser and Create admin account
 login `owncloudadmin`
 pass `PCC/24pcc/24`
 database user `cloud_user`
