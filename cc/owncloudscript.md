@@ -1,21 +1,7 @@
  apt update
  apt install apache2 -y
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+```
   1  apt update
     2  apt install apache2 -y
 
@@ -162,3 +148,4 @@
   143  nano config.php
   144  service apache2 restart
   145  history
+```
