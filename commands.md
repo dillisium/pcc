@@ -106,6 +106,7 @@ FLUSH PRIVILEGES;
 exit
 wget https://download.owncloud.com/server/stable/owncloud-complete-20210721.zip
 mv owncloud-complete-20210721.zip /var/www/html
+cd /var/www/html
 apt install unzip
 unzip owncloud-complete-20210721.zip
 chown -R www-data:www-data owncloud/
@@ -116,7 +117,7 @@ nano /etc/apache2/sites-available/000-default.conf
 
 service apache2 restart
 ```
-## Follow your ip in vrowser and Create admin account
+## Follow your ip in browser and Create admin account
 login `owncloudadmin`
 pass `PCC/24pcc/24`
 database user `cloud_user`
@@ -141,6 +142,25 @@ nano /var/www/html/owncloud/config/config.php
   # MariaDB cluster
 
   ```
+  sudo -i
   apt-get install chrony -y
+  nano /etc/chrony/chrony.conf
+  ```
+  add string under "#About using servers from the NTP Pool Project in general see (LP: #104525)."
 
+  `server ntp-1.daas.hof-university.de iburst`
+
+  `server ntp-2.daas.hof-university.de iburst`
+  ```
+
+
+
+
+
+
+n
+y
+y
+y
+y
   ```
