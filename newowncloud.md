@@ -1,3 +1,4 @@
+```
 sudo -i
 apt update -y
 apt install apache2 -y
@@ -240,3 +241,4 @@ backend http_back
     server lamp2 10.0.141.173:80 check
     server lamp3 10.0.134.227:80 check
     server docker 10.0.134.40:80 check
+```
