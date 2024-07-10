@@ -1,0 +1,20 @@
+        version: '3.8'
+        
+        services:
+          owncloud:
+            build: .
+            ports:
+              - "80:80"
+            volumes:
+              - type: volume
+                source: ownclouddata
+                target: /mnt/ownclouddata
+                volume:
+                  nocopy: true
+        
+        volumes:
+          ownclouddata:
+            driver_opts:
+              type: "nfs"
+              o: "addr=10.0.134.251,nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport"
+              device: ":/"

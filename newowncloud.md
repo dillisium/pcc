@@ -239,6 +239,5 @@ backend http_back
     option httpchk HEAD /status.php HTTP/1.1\r\nHost:\ localhost
     server lamp1 10.0.141.169:80 check
     server lamp2 10.0.141.173:80 check
-    server lamp3 10.0.134.227:80 check
     server docker 10.0.134.40:80 check
 ```
