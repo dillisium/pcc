@@ -1,6 +1,43 @@
+ ```
  apt update
  apt install apache2 -y
-  
+ nano /var/www/html/info.php
+ apt install mysql-server
+ apt install php -y
+ wget https://download.owncloud.com/server/stable/owncloud-complete-20210721.zip
+ mv owncloud-complete-20210721.zip /var/www/html
+ cd /var/www/html
+ apt install unzip
+ unzip owncloud-complete-20210721.zip
+ nano /etc/apache2/sites-available/000-default.conf
+
+mysql -h database-mariadb-owncloud.ckm92dhbcoyf.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+ CREATE DATABASE owncloud;
+CREATE USER 'cloud_user'@'10.0.141.169' IDENTIFIED BY 'PCC/24pcc/24';
+GRANT ALL PRIVILEGES ON owncloud.* TO 'cloud_user'@'10.0.141.169';
+FLUSH PRIVILEGES;
+exit
+
+
+ CREATE DATABASE owncloud;
+CREATE USER 'cloud_user'@'10.0.141.173' IDENTIFIED BY 'PCC/24pcc/24';
+GRANT ALL PRIVILEGES ON owncloud.* TO 'cloud_user'@'10.0.141.173';
+FLUSH PRIVILEGES;
+exit
+
+sudo apt-get install php php-mysql php-zip php-dom php-xml php-intl php-mbstring php-gd php-curl php-simplexml -y
+
+```
+  ## put that into file
+```
+<?php
+phpinfo();
+?>
+```
+
+
+
+
 ```
   1  apt update
     2  apt install apache2 -y
@@ -135,7 +172,7 @@
   130  ls
   131  cd ownclouddata/
   132  cd ownclouddata
-  133  sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=                                                                                                             600,retrans=2,noresvport 172.31.59.138:/ /mnt/ownclouddata/
+  133  sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 172.31.59.138:/ /mnt/ownclouddata/
   134  ls
   135  cd ../
   136  ls
@@ -149,3 +186,49 @@
   144  service apache2 restart
   145  history
 ```
+
+
+ mysql -h database-mariadb-owncloud.ckm92dhbcoyf.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+
+
+apt install nfs-common
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 10.0.134.251:/ /mnt/ownclouddata/
+
+USE owncloud;
+SELECT * FROM oc_accounts WHERE home NOT LIKE '%/mnt/ownclouddata/%';
+UPDATE oc_accounts SET home = '/mnt/ownclouddata/owncloudadmin' WHERE id = <user_id>;
+
+
+
+sudo -u www-data php /var/www/html/owncloud/occ files:scan --all
+UPDATE oc_accounts SET home = '/mnt/ownclouddata/owncloudadmin' WHERE user_id = 'owncloudadmin';
+SELECT * FROM oc_accounts WHERE user_id = 'owncloudadmin';
+
+
+
+
+<?php
+$CONFIG = array (
+  'instanceid' => 'ocgxpmpul2di',
+  'passwordsalt' => 'VQJmL3TLE73Jjux9lwLsnyuGsKfusF',
+  'secret' => 'hHOxUxMgTHqUwrkZSVioYOmA5Ux2vTDoIkzi4e6TFdRqvjGu',
+  'trusted_domains' =>
+  array (
+    0 => '34.224.26.9',
+  ),
+  'datadirectory' => '/mnt/ownclouddata',
+  'overwrite.cli.url' => 'http://34.224.26.9/',
+  'dbtype' => 'mysql',
+  'version' => '10.8.0.4',
+  'dbname' => 'owncloud',
+  'dbhost' => 'database-mariadb-owncloud.ckm92dhbcoyf.us-east-1.rds.amazonaws.com',
+  'dbtableprefix' => 'oc_',
+  'mysql.utf8mb4' => true,
+  'dbuser' => 'cloud_user',
+  'dbpassword' => 'PCC/24pcc/24',
+  'logtimezone' => 'UTC',
+  'apps_paths' =>
+  array (
+    0 =>
+    array (
+             
