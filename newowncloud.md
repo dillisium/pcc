@@ -36,14 +36,13 @@ service apache2 restart
 
 
 
-
 sudo -i
 apt update -y
 apt install docker -y
 apt install docker.io -y
 apt install docker-compose -y
     Dockerfile  docker-compose.yml  docker-entrypoint.sh  owncloud-apache.conf
-    Dockerfile:
+nano Dockerfile
         # Use an official Ubuntu as a parent image
 FROM ubuntu:20.04
 
@@ -123,7 +122,7 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 
 
-docker-entrypoint.sh:
+nano docker-entrypoint.sh
 #!/bin/bash
 
 # Wait for the database to be ready
@@ -145,7 +144,7 @@ apachectl -D FOREGROUND
 
 
 
-owncloud-apache.conf:
+nano owncloud-apache.conf
 <VirtualHost *:80>
     ServerName 34.224.26.9
     ServerAdmin webmaster@localhost
@@ -169,3 +168,75 @@ owncloud-apache.conf:
 </VirtualHost>
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+
+
+to run docker:
+docker-compose build
+docker-compose up -d
+
+
+
+
+
+
+
+
+
+
+генерация ключа для ссл
+openssl genrsa -out haproxy.key 2048
+openssl req -new -key haproxy.key -out haproxy.csr
+openssl x509 -req -days 365 -in haproxy.csr -signkey  haproxy.key -out haproxy.crt
+bash -c 'cat haproxy.key haproxy.crt >> /etc/ssl/private/haproxy.pem'
+
+HAPROXY config
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+    # Default SSL material locations
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHA>
+    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+    ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+    errorfile 400 /etc/haproxy/errors/400.http
+    errorfile 403 /etc/haproxy/errors/403.http
+    errorfile 408 /etc/haproxy/errors/408.http
+    errorfile 500 /etc/haproxy/errors/500.http
+    errorfile 502 /etc/haproxy/errors/502.http
+    errorfile 503 /etc/haproxy/errors/503.http
+    errorfile 504 /etc/haproxy/errors/504.http
+
+frontend http_front
+    bind *:80
+    redirect scheme https code 301 if !{ ssl_fc }
+    bind *:443 ssl crt /etc/ssl/private/haproxy.pem
+    stats uri /haproxy?stats
+    default_backend http_back
+
+backend http_back
+    balance source
+    option httpchk HEAD /status.php HTTP/1.1\r\nHost:\ localhost
+    server lamp1 10.0.141.169:80 check
+    server lamp2 10.0.141.173:80 check
+    server lamp3 10.0.134.227:80 check
+    server docker 10.0.134.40:80 check
